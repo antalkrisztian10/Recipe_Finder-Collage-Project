@@ -1,0 +1,190 @@
+.container {
+    width: 500px;
+    height: 400px;
+    overflow: hidden; /* Hide overflow to prevent image from overflowing */
+}
+
+.hover-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease; /* Add transition for smooth movement */
+}
+
+.hover-image:hover {
+    transform: translateX(20px); /* Move the image to the right on hover */
+}
+
+.hover-image {
+    width: 100%;
+    height: 350px; /* Adjust this height as needed */
+    object-fit: cover;
+}
+
+.text-center {
+    text-align: center;
+}
+
+body {
+  background-color: #29cd93; /* Dark blue background color */
+}
+
+.workout {
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  background-color: #e5ff00;
+}
+.workout h2 {
+  margin-top: 0;
+}
+.workout p {
+  margin-bottom: 10px;
+}
+.workout .button {
+  margin-top: 10px;
+}
+
+.workout.beginner {
+  background-color: green; /* Set background color for beginner workouts */
+}
+
+.workout.intermediate {
+  background-color: darkblue; /* Set background color for intermediate workouts */
+}
+
+.workout.advanced {
+  background-color: red; /* Set background color for advanced workouts */
+}
+
+.top-bar {
+  background-color: #1bae7b; /* Change the background color of the top bar */
+}
+.top-bar .button-group {
+  margin-right: 10px; /* Add margin to the right of the button group */
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+.button-group .button {
+  margin-top: 15px;
+  margin-left: 10px; /* Add some space between buttons */
+}
+.top-bar ul.menu {
+  background-color: #1bae7b; /* Change the background color of the menu */
+}
+
+.top-bar ul.menu li a {
+  color: #000000; /* Change the text color of the menu items */
+}
+
+.top-bar-center {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.badge {
+  font-size: 2rem; /* Increase font size */
+}
+
+.progress {
+  position: relative;
+  height: 20px; /* Adjust height as needed */
+}
+
+.progress-meter {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #007bff; /* Adjust background color as needed */
+}
+
+.progress-meter-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white; /* Adjust text color as needed */
+}
+
+.custom-green {
+  background-color: #1bae7b; /* Adjust the color code as needed */
+  color: rgb(0, 0, 0); /* Change text color to white */
+}
+
+.small-search {
+  width: 300px; /* Adjust the width as needed */
+  margin-right: 10px;
+}
+
+.search-container {
+  display: flex; /* Use Flexbox layout */
+  align-items: center; /* Align items vertically */
+}
+
+.centered-cards {
+  display: flex;
+  justify-content: center;
+}
+
+/* CSS for the workouts table only */
+.workouts-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.workouts-table th, .workouts-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.workouts-table th {
+  background-color: #f2f2f2;
+}
+.workouts-table img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.workouts-table img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.button-grup {
+  justify-content: center;
+}
+
+.workouts-table th:nth-child(2),
+    .workouts-table th:nth-child(4),
+    .workouts-table td:nth-child(2),
+    .workouts-table td:nth-child(4) {
+      width: 80px; /* Adjust the width as needed */
+    }
+
+/* Custom styles */
+.workout-card {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #000000;
+  background-color: #1bae7b;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.workout-card img {
+  width: 100%; /* Set image width to 100% */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 10px;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalii Reteta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="grid-container">
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="menu">
+                <li class="menu-text">Recipe Finder</li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/recipes">Recipes</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <h1>{{ recipe.titlu }}</h1>
+        {% if recipe.imagine %}
+        <img src="{{ recipe.imagine }}" alt="Imagine reteta">
+        {% endif %}
+        <h3>Ingredients</h3>
+        <ul>
+            {% for ingredient in recipe.ingrediente %}
+            <li>{{ ingredient.ingredient.nume }} - {{ ingredient.cantitate }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Instructions</h3>
+        <p>{{ recipe.instructiuni }}</p>
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/vendor/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/what-input.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/foundation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>

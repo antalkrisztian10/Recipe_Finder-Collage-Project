@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rețete bazate pe ingrediente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="grid-container">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu">
+        <li class="menu-text">Rețete bazate pe ingrediente</li>
+        <li><a href="/">Acasa</a></li>
+        <li><a href="/recipes">Retete</a></li>
+        <li><a href="/about">Despre</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <div class="grid-container">
+      <div class="grid-x grid-padding-x">
+        <div class="cell text-center">
+            <br><br>
+          <h1>Bine ai venit!</h1>
+          <p>Gaseste cele mai bune retele cu ingredientele pe care le ai acasa.</p>
+        </div>
+      </div>
+      <form action="/" method="post">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-6 cell">
+            <label>Introdu ingredientele tale despartite de o virgula:
+              <input type="text" name="ingredients" placeholder="ex: faina, ulei, sare, zahar">
+            </label>
+          </div>
+          <div class="medium-6 cell">
+              <br>
+            <button type="submit" class="button expanded">Cauta Retete</button>
+          </div>
+        </div>
+      </form>
+      {% if recipes %}
+        <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-3">
+          {% for recipe in recipes %}
+          <div class="cell">
+            <div class="card workout">
+              <div class="card-divider">
+                <h4>{{ recipe.titlu }}</h4>
+              </div>
+              {% if recipe.imagine %}
+              <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
+              {% endif %}
+              <div class="card-section">
+                <p>{{ recipe.instructiuni | truncate(150) }}</p>
+                <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/vendor/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/what-input.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/foundation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

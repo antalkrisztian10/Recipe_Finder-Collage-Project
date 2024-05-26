@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rețete bazate pe ingrediente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="grid-container">
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="menu">
+                <li class="menu-text">Rețete bazate pe ingrediente</li>
+                <li><a href="/">Acasa</a></li>
+                <li><a href="/recipes">Retete</a></li>
+                <li><a href="/about">Despre</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <br><br>
+        <h1>Despre Proiectul "Retete bazate pe ingrediente"</h1>
+        <p>Acest proiect a fost creat de Antal Krisztian si Ghisa Catalin</p>
+        <p>Proiectul foloseste limbajul Python cu Frameworkul Flask pentru back-end, limbajul HTML cu Frameworkul Zurb Foundation pentru front-end si SQL impreuna cu XAMP pentru crearea si mentinerera bazei de date.</p>
+    </main>
+</div>
+<script src="{{ url_for('static', filename='js/vendor/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/what-input.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/foundation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
