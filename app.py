@@ -7,11 +7,10 @@ pymysql.install_as_MySQLdb()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/recipe_finder'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching for development
 
 db = SQLAlchemy(app)
 
-from models import Retete, Ingrediente, IngredienteRetete
+from models import Retete, Ingrediente, IngredienteRetete, Recenzii
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -20,7 +19,8 @@ def index():
         ingrediente_input = [i.strip().lower() for i in ingrediente_input]
 
         subinterogare = db.session.query(IngredienteRetete.reteta_id).join(Ingrediente).filter(
-            Ingrediente.nume.ilike(f'%{i}%') for i in ingrediente_input).subquery()
+            db.or_(*(Ingrediente.nume.ilike(f'%{i}%') for i in ingrediente_input))
+        ).subquery()
 
         retete_potrivite = db.session.query(Retete).join(IngredienteRetete,
                                                          Retete.id == IngredienteRetete.reteta_id).filter(
@@ -39,10 +39,21 @@ def recipes():
 
     return render_template('retete.html', recipes=retete)
 
-@app.route('/recipe/<int:recipe_id>')
+@app.route('/recipe/<int:recipe_id>', methods=['GET', 'POST'])
 def recipe_detail(recipe_id):
     reteta = Retete.query.get_or_404(recipe_id)
-    return render_template('detalii_retete.html', recipe=reteta)
+
+    if request.method == 'POST':
+        nume = request.form['nume']
+        nota = request.form['nota']
+        comentariu = request.form['comentariu']
+
+        recenzie = Recenzii(nume=nume, nota=nota, comentariu=comentariu, reteta_id=recipe_id)
+        db.session.add(recenzie)
+        db.session.commit()
+
+    recenzii = Recenzii.query.filter_by(reteta_id=recipe_id).all()
+    return render_template('detalii_retete.html', recipe=reteta, recenzii=recenzii)
 
 @app.route('/about')
 def about():

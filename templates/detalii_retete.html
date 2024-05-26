@@ -12,10 +12,10 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="menu">
-                <li class="menu-text">Recipe Finder</li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/recipes">Recipes</a></li>
-                <li><a href="/about">About</a></li>
+                <li class="menu-text">Rețete bazate pe ingrediente</li>
+                <li><a href="/">Acasa</a></li>
+                <li><a href="/recipes">Retete</a></li>
+                <li><a href="/about">Despre</a></li>
             </ul>
         </div>
     </div>
@@ -23,16 +23,42 @@
     <main>
         <h1>{{ recipe.titlu }}</h1>
         {% if recipe.imagine %}
-        <img src="{{ recipe.imagine }}" alt="Imagine reteta">
+        <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine reteta">
         {% endif %}
-        <h3>Ingredients</h3>
+        <h3>Ingrediente</h3>
         <ul>
             {% for ingredient in recipe.ingrediente %}
             <li>{{ ingredient.ingredient.nume }} - {{ ingredient.cantitate }}</li>
             {% endfor %}
         </ul>
-        <h3>Instructions</h3>
+        <h3>Instrucțiuni</h3>
         <p>{{ recipe.instructiuni }}</p>
+
+        <h3>Lasă O Recenzie</h3>
+        <form action="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" method="post">
+            <label for="nume">Nume:</label>
+            <input type="text" id="nume" name="nume" required>
+            <label for="nota">Nota:</label>
+            <select id="nota" name="nota" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <label for="comentariu">Comentariu:</label>
+            <textarea id="comentariu" name="comentariu" rows="4" required></textarea>
+            <button type="submit" class="button">Trimite Recenzia</button>
+        </form>
+
+        <!-- Display existing reviews -->
+        <h3>Toate Recenziile</h3>
+        {% for recenzie in recenzii %}
+        <div>
+            <strong>{{ recenzie.nume }}</strong> a apreciat cu {{ recenzie.nota }} stele
+            <p>{{ recenzie.comentariu }}</p>
+        </div>
+        {% endfor %}
     </main>
 </div>
 
