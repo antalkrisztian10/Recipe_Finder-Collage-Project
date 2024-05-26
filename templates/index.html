@@ -52,7 +52,7 @@
                 <h4>{{ recipe.titlu }}</h4>
               </div>
               {% if recipe.imagine %}
-              <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
+              <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine reteta">
               {% endif %}
               <div class="card-section">
                 <p>{{ recipe.instructiuni | truncate(150) }}</p>

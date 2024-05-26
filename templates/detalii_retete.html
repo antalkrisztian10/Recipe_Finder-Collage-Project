@@ -23,7 +23,7 @@
     <main>
         <h1>{{ recipe.titlu }}</h1>
         {% if recipe.imagine %}
-        <img src="{{ recipe.imagine }}" alt="Imagine reteta">
+        <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine reteta">
         {% endif %}
         <h3>Ingredients</h3>
         <ul>

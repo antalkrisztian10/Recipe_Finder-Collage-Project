@@ -185,6 +185,25 @@ body {
 
 .workout-card img {
   width: 100%; /* Set image width to 100% */
-  height: auto; /* Maintain aspect ratio */
+  height: 250px; /* Maintain aspect ratio */
   margin-bottom: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card {
+    height: 550px; /* Adjust this value based on your design preference */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

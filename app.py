@@ -7,7 +7,6 @@ pymysql.install_as_MySQLdb()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/recipe_finder'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching for development
 
 db = SQLAlchemy(app)
 
@@ -19,8 +18,10 @@ def index():
         ingrediente_input = request.form.get('ingredients').split(',')
         ingrediente_input = [i.strip().lower() for i in ingrediente_input]
 
+        # Use any_() for multiple ilike conditions in the filter
         subinterogare = db.session.query(IngredienteRetete.reteta_id).join(Ingrediente).filter(
-            Ingrediente.nume.ilike(f'%{i}%') for i in ingrediente_input).subquery()
+            db.or_(*(Ingrediente.nume.ilike(f'%{i}%') for i in ingrediente_input))
+        ).subquery()
 
         retete_potrivite = db.session.query(Retete).join(IngredienteRetete,
                                                          Retete.id == IngredienteRetete.reteta_id).filter(
