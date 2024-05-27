@@ -18,6 +18,7 @@ def index():
         ingrediente_input = request.form.get('ingredients').split(',')
         ingrediente_input = [i.strip().lower() for i in ingrediente_input]
 
+        # Use any_() for multiple ilike conditions in the filter
         subinterogare = db.session.query(IngredienteRetete.reteta_id).join(Ingrediente).filter(
             db.or_(*(Ingrediente.nume.ilike(f'%{i}%') for i in ingrediente_input))
         ).subquery()
