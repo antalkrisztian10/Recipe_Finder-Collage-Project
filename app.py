@@ -21,6 +21,9 @@ from models import Retete, Ingrediente, IngredienteRetete, Recenzii
 # Am definit ruta de baza cu care porneste aplicatia
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # Selectăm primele 4 rețete pentru recomandări
+    recommended_recipes = Retete.query.limit(4).all()
+
     # Metoda 'POST' preia datele din formular, separate printr-o virgula cu functia 'split' +
     # le face mici cu 'lower' si le elimina spatiile albe cu functia 'strip'
     if request.method == 'POST':
@@ -29,16 +32,16 @@ def index():
 
         # Cautam toate retele cu ingredientele specificate de utilizator
         subinterogare = db.session.query(IngredienteRetete.reteta_id).join(Ingrediente).filter(
-            Ingrediente.nume.in_(ingrediente_input)
-        ).group_by(IngredienteRetete.reteta_id).having(db.func.count(IngredienteRetete.ingredient_id) == len(ingrediente_input)).subquery()
+        Ingrediente.nume.in_(ingrediente_input)).group_by(IngredienteRetete.reteta_id).having(db.func.count(IngredienteRetete.ingredient_id) == len(ingrediente_input)).subquery()
 
         # Dupa cautare selecteaza toate retele care se potrivesc pe baza critetiilor puse de utilizator
         retete_potrivite = db.session.query(Retete).filter(Retete.id.in_(subinterogare)).all()
 
-        # Afisam pe pagina principala (index.html) rezultatele cautarii.
-        return render_template('index.html', recipes=retete_potrivite)
-    # Daca nu s-au gasit retete potrivite afisam pagina goala.
-    return render_template('index.html')
+        # Afisam pe pagina principala (index.html) cu retetele gasite si retetele recomandate
+        return render_template('index.html', recipes=retete_potrivite, recommended_recipes=recommended_recipes)
+
+    # Daca nu s-au gasit retete potrivite, pagina index.html va afisa doar retetele recomandate
+    return render_template('index.html', recommended_recipes=recommended_recipes)
 
 
 # Am definit metoda 'recipes' care afiseaza toate retetele

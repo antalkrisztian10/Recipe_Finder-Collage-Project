@@ -7,55 +7,98 @@
     <title>Toate Rețetele</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .recipe-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            text-align: center;
+        }
+        .search-bar {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 300px;
+            font-size: 1em;
+        }
+        .search-button {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-left: 10px;
+        }
+        .search-button:hover {
+            background-color: #606060;
+        }
+        .card-divider {
+            background-color: #585858;
+            color: white;
+            padding: 10px;
+        }
+        .card img {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
 <div class="grid-container">
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <ul class="menu">
-        <li class="menu-text">Rețete bazate pe ingrediente</li>
-        <li><a href="/">Acasa</a></li>
-        <li><a href="/recipes">Retete</a></li>
-        <li><a href="/about">Despre</a></li>
-      </ul>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="menu">
+                <li class="menu-text">Rețete bazate pe ingrediente</li>
+                <li><a href="/">Acasa</a></li>
+                <li><a href="/recipes">Retete</a></li>
+                <li><a href="/about">Despre</a></li>
+            </ul>
+        </div>
+        <!-- Search bar -->
+        <div class="top-bar-right">
+            <form action="/recipes" method="get">
+                <ul class="menu">
+                    <li><input type="search" name="search" placeholder="Search Recipes" value="{{ request.args.get('search', '') }}" class="search-bar"></li>
+                    <li><button type="submit" class="search-button">Search</button></li>
+                </ul>
+            </form>
+        </div>
     </div>
-
-      <div class="top-bar-right">
-        <form action="/recipes" method="get">
-        <ul class="menu">
-          <li><input type="search" name="search" placeholder="Search Recipes" value="{{ request.args.get('search', '') }}"></li>
-          <li><button type="submit" class="button">Search</button></li>
-        </ul>
-        </form>
-      </div>
-  </div>
-
-  <main>
-    <div class="grid-container">
-      <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-3">
-        {% if recipes %}
-          {% for recipe in recipes %}
-            <div class="cell">
-              <div class="card workout">
-                <div class="card-divider">
-                  <h4>{{ recipe.titlu }}</h4>
-                </div>
-                <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
-                <div class="card-section">
-                  <p>{{ recipe.instructiuni | truncate(150) }}</p>
-                  <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
-                </div>
-              </div>
+    <!-- Card-urile -->
+    <main>
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-3">
+                {% if recipes %}
+                    {% for recipe in recipes %}
+                        <div class="cell">
+                            <div class="card recipe">
+                                <div class="card-divider">
+                                    <h4 class="recipe-title">{{ recipe.titlu }}</h4>
+                                </div>
+                                {% if recipe.imagine %}
+                                <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
+                                {% endif %}
+                                <div class="card-section">
+                                    <p>{{ recipe.instructiuni | truncate(150) }}</p>
+                                    <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="cell">
+                        <p>No recipes found.</p>
+                    </div>
+                {% endif %}
             </div>
-          {% endfor %}
-        {% else %}
-          <div class="cell">
-            <p>No recipes found.</p>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </main>
+        </div>
+    </main>
 </div>
 
 <script src="{{ url_for('static', filename='js/vendor/jquery.js') }}"></script>

@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rețete bazate pe ingrediente</title>
+    <title>Despre Proiectul "Rețete bazate pe ingrediente"</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .content-section {
+            padding: 50px;
+            background-color: #646363;
+            border-radius: 8px;
+            margin: 50px auto;
+            max-width: 1000px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+        .content-section h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #fff;
+        }
+        .content-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 <div class="grid-container">
@@ -21,12 +43,18 @@
     </div>
 
     <main>
-        <br><br>
-        <h1>Despre Proiectul "Retete bazate pe ingrediente"</h1>
-        <p>Acest proiect a fost creat de Antal Krisztian si Ghisa Catalin</p>
-        <p>Proiectul foloseste limbajul Python cu Frameworkul Flask pentru back-end, limbajul HTML cu Frameworkul Zurb Foundation pentru front-end si SQL impreuna cu XAMP pentru crearea si mentinerera bazei de date.</p>
+        <div class="content-section">
+            <h1>Despre Proiectul "Rețete bazate pe ingrediente"</h1>
+            <p>Acest proiect a fost creat de Antal Krisztian și Ghisa Catalin. Proiectul utilizează limbajul Python cu framework-ul Flask pentru back-end, limbajul HTML cu framework-ul Zurb Foundation pentru front-end și SQL împreună cu XAMP pentru crearea și menținerea bazei de date.</p>
+            <p>Scopul nostru este să ajutăm utilizatorii să găsească rețete delicioase utilizând ingredientele pe care le au deja acasă. Ne dorim să facem gătitul mai accesibil pentru toată lumea.</p>
+            <p>În cazul în care constatați vreo problemă sau dacă aveți întrebări, ne puteți contacta pe următoarele email-uri:
+                <br>antalkristian10@gmail.com
+                <br>ghisa.catalin@gmail.com
+            </p>
+        </div>
     </main>
 </div>
+
 <script src="{{ url_for('static', filename='js/vendor/jquery.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/what-input.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/foundation.js') }}"></script>

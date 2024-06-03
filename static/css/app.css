@@ -1,67 +1,48 @@
-.container {
-    width: 500px;
-    height: 400px;
-    overflow: hidden; /* Hide overflow to prevent image from overflowing */
-}
-
-.hover-image {
-    width: 100%;
-    height: auto;
-    transition: transform 0.3s ease; /* Add transition for smooth movement */
-}
-
-.hover-image:hover {
-    transform: translateX(20px); /* Move the image to the right on hover */
-}
-
-.hover-image {
-    width: 100%;
-    height: 350px; /* Adjust this height as needed */
-    object-fit: cover;
-}
-
-.text-center {
-    text-align: center;
-}
-
 body {
-  background-color: #29cd93; /* Dark blue background color */
+  background-color: #8f8d8d;
+  font-family: 'Roboto', sans-serif;
 }
 
-.workout {
+.card-divider {
+  background-color: #585858;
+  padding: 10px;
+  text-align: center;
+}
+
+.recipe {
   margin: 20px 0;
   padding: 20px;
-  border: 2px solid #000000;
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 5px;
-  background-color: #e5ff00;
+  background-color: #585858;
 }
-.workout h2 {
+.recipe h2 {
   margin-top: 0;
 }
-.workout p {
+.recipe p {
   margin-bottom: 10px;
 }
-.workout .button {
-  margin-top: 10px;
+.recipe .button {
+  margin: 10px;
+  background-color: #333333;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
-.workout.beginner {
-  background-color: green; /* Set background color for beginner workouts */
-}
-
-.workout.intermediate {
-  background-color: darkblue; /* Set background color for intermediate workouts */
-}
-
-.workout.advanced {
-  background-color: red; /* Set background color for advanced workouts */
+.recipe .button:hover {
+  background-color: #454545;
 }
 
 .top-bar {
-  background-color: #1bae7b; /* Change the background color of the top bar */
+  background: #585858;
+  color: #000000;
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .top-bar .button-group {
-  margin-right: 10px; /* Add margin to the right of the button group */
+  margin-right: 10px;
 }
 
 .top-bar-right {
@@ -69,22 +50,18 @@ body {
   align-items: center;
 }
 
-.button-group {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; /* Align buttons to the right */
-}
-
-.button-group .button {
-  margin-top: 15px;
-  margin-left: 10px; /* Add some space between buttons */
-}
 .top-bar ul.menu {
-  background-color: #1bae7b; /* Change the background color of the menu */
+  background-color: transparent;
 }
 
 .top-bar ul.menu li a {
-  color: #000000; /* Change the text color of the menu items */
+  color: #000000;
+  padding: 10px;
+  text-decoration: none;
+}
+.top-bar ul.menu li a:hover {
+  background-color: rgba(143, 143, 143, 0.696);
+  border-radius: 5px;
 }
 
 .top-bar-center {
@@ -92,88 +69,7 @@ body {
   text-align: center;
 }
 
-.badge {
-  font-size: 2rem; /* Increase font size */
-}
-
-.progress {
-  position: relative;
-  height: 20px; /* Adjust height as needed */
-}
-
-.progress-meter {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: #007bff; /* Adjust background color as needed */
-}
-
-.progress-meter-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white; /* Adjust text color as needed */
-}
-
-.custom-green {
-  background-color: #1bae7b; /* Adjust the color code as needed */
-  color: rgb(0, 0, 0); /* Change text color to white */
-}
-
-.small-search {
-  width: 300px; /* Adjust the width as needed */
-  margin-right: 10px;
-}
-
-.search-container {
-  display: flex; /* Use Flexbox layout */
-  align-items: center; /* Align items vertically */
-}
-
-.centered-cards {
-  display: flex;
-  justify-content: center;
-}
-
-/* CSS for the workouts table only */
-.workouts-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.workouts-table th, .workouts-table td {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-.workouts-table th {
-  background-color: #f2f2f2;
-}
-.workouts-table img {
-  max-width: 50px;
-  max-height: 50px;
-}
-
-.workouts-table img {
-  max-width: 200px;
-  max-height: 200px;
-}
-
-.button-grup {
-  justify-content: center;
-}
-
-.workouts-table th:nth-child(2),
-    .workouts-table th:nth-child(4),
-    .workouts-table td:nth-child(2),
-    .workouts-table td:nth-child(4) {
-      width: 80px; /* Adjust the width as needed */
-    }
-
-/* Custom styles */
-.workout-card {
+.recipe-card {
   max-width: 700px;
   margin: 20px auto;
   padding: 20px;
@@ -183,27 +79,57 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.workout-card img {
-  width: 100%; /* Set image width to 100% */
-  height: 250px; /* Maintain aspect ratio */
+.recipe-card img {
+  width: 100%;
+  height: 250px;
   margin-bottom: 10px;
 }
 
 .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  border: 10px #000000;
+  border-radius: 20px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
 .card {
-    height: 550px; /* Adjust this value based on your design preference */
-    display: flex;
-    flex-direction: column;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-section {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recipes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.recipes-table th, .recipes-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.recipes-table th {
+  background-color: #f2f2f2;
+}
+.recipes-table img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.button-group {
+  justify-content: center;
+}
+
+.recipes-table th:nth-child(2),
+.recipes-table th:nth-child(4),
+.recipes-table td:nth-child(2),
+.recipes-table td:nth-child(4) {
+  width: 80px;
 }
