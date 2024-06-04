@@ -69,10 +69,6 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        .separator {
-            border-top: 2px solid #ddd;
-            margin: 50px 0;
-        }
     </style>
 </head>
 <body>
@@ -109,11 +105,31 @@
                     </div>
                 </div>
             </form>
-            <!-- Rețete recomandate -->
+            <!-- Rețete recomandate sau potrivite -->
             <div class="featured-recipes">
-                <h2>Rețete Recomandate</h2>
-                <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
-                    {% if recommended_recipes %}
+                {% if recipes %}
+                    <h2>Rețete Potrivite</h2>
+                    <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
+                        {% for recipe in recipes %}
+                            <div class="cell">
+                                <div class="card recipe">
+                                    <div class="card-divider">
+                                        <h4 class="recipe-title">{{ recipe.titlu }}</h4>
+                                    </div>
+                                    {% if recipe.imagine %}
+                                    <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
+                                    {% endif %}
+                                    <div class="card-section">
+                                        <p>{{ recipe.instructiuni | truncate(150) }}</p>
+                                        <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <h2>Rețete Recomandate</h2>
+                    <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
                         {% for recipe in recommended_recipes %}
                             <div class="cell">
                                 <div class="card recipe">
@@ -130,32 +146,9 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-            <!-- Linie de separare -->
-            <hr class="separator">
-            <!-- Rezultatele căutării -->
-            {% if recipes %}
-                <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
-                    {% for recipe in recipes %}
-                    <div class="cell">
-                        <div class="card recipe">
-                            <div class="card-divider">
-                                <h4 class="recipe-title">{{ recipe.titlu }}</h4>
-                            </div>
-                            {% if recipe.imagine %}
-                            <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
-                            {% endif %}
-                            <div class="card-section">
-                                <p>{{ recipe.instructiuni | truncate(150) }}</p>
-                                <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
-                            </div>
-                        </div>
                     </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </main>
 </div>

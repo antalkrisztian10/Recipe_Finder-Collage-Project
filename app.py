@@ -1,4 +1,4 @@
-# Importam libariile necesare pentru a rula aplicatia
+# Importam librariile necesare pentru a rula aplicatia
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
@@ -23,6 +23,7 @@ from models import Retete, Ingrediente, IngredienteRetete, Recenzii
 def index():
     # Selectăm primele 4 rețete pentru recomandări
     recommended_recipes = Retete.query.limit(4).all()
+    retete_potrivite = None
 
     # Metoda 'POST' preia datele din formular, separate printr-o virgula cu functia 'split' +
     # le face mici cu 'lower' si le elimina spatiile albe cu functia 'strip'
@@ -37,11 +38,8 @@ def index():
         # Dupa cautare selecteaza toate retele care se potrivesc pe baza critetiilor puse de utilizator
         retete_potrivite = db.session.query(Retete).filter(Retete.id.in_(subinterogare)).all()
 
-        # Afisam pe pagina principala (index.html) cu retetele gasite si retetele recomandate
-        return render_template('index.html', recipes=retete_potrivite, recommended_recipes=recommended_recipes)
-
-    # Daca nu s-au gasit retete potrivite, pagina index.html va afisa doar retetele recomandate
-    return render_template('index.html', recommended_recipes=recommended_recipes)
+    # Afisam pe pagina principala (index.html) cu retetele gasite si retetele recomandate
+    return render_template('index.html', recipes=retete_potrivite, recommended_recipes=recommended_recipes)
 
 
 # Am definit metoda 'recipes' care afiseaza toate retetele
@@ -91,4 +89,4 @@ def about():
 
 # De aici se ruleaza aplicatia si se porneste serverul.
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
