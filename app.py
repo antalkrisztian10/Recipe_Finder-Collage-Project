@@ -15,15 +15,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Importam tabelele din baza de date definite in fisierul models.py
-from models import Retete, Ingrediente, IngredienteRetete, Recenzii
+from models import Retete, Recenzii
 
 
 # Am definit ruta de baza cu care porneste aplicatia
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # Selectăm primele 4 rețete pentru recomandări
-    recommended_recipes = Retete.query.limit(4).all()
-    retete_potrivite = None
+    retete_recomandate = Retete.query.limit(4).all()
+    retete_potrivite = []
+    mesaj_fara_retete = None
 
     # Metoda 'POST' preia datele din formular, separate printr-o virgula cu functia 'split' +
     # le face mici cu 'lower' si le elimina spatiile albe cu functia 'strip'
@@ -31,15 +32,31 @@ def index():
         ingrediente_input = request.form.get('ingredients').split(',')
         ingrediente_input = [i.strip().lower() for i in ingrediente_input]
 
-        # Cautam toate retele cu ingredientele specificate de utilizator
-        subinterogare = db.session.query(IngredienteRetete.reteta_id).join(Ingrediente).filter(
-        Ingrediente.nume.in_(ingrediente_input)).group_by(IngredienteRetete.reteta_id).having(db.func.count(IngredienteRetete.ingredient_id) == len(ingrediente_input)).subquery()
+        # Căutăm toate rețetele și ingredientele lor
+        toate_retetele = Retete.query.all()
 
-        # Dupa cautare selecteaza toate retele care se potrivesc pe baza critetiilor puse de utilizator
-        retete_potrivite = db.session.query(Retete).filter(Retete.id.in_(subinterogare)).all()
+        # Verificam fiecare reteta din toate_retetele
+        for reteta in toate_retetele:
+            # Cream un set pentru a stoca numele ingredientelor
+            ingrediente_reteta = set()
+
+            # Parcurgem prin fiecare ingredient asociat cu rețeta curentă
+            for ingrediente in reteta.ingrediente:
+                # Adăugăm numele ingredientului în setul ingrediente_reteta
+                ingrediente_reteta.add(ingrediente.ingredient.nume)
+
+            # Aici verificam daca toate ingredientele retetei se gasesc in lista de ingrediente specificata de user.
+            if ingrediente_reteta.issubset(ingrediente_input):
+                # Daca toate ingredientele sunt in lista ingredientelor, bagam reteta la rețete potrivite
+                retete_potrivite.append(reteta)
+
+        # Daca lista de retete este goala inseamna ca avem nici-o reteta care poate fi facuta cu ingredientele introduse
+        if not retete_potrivite:
+            mesaj_fara_retete = "Nu ai suficiente ingrediente pentru a compune o reteta"
 
     # Afisam pe pagina principala (index.html) cu retetele gasite si retetele recomandate
-    return render_template('index.html', recipes=retete_potrivite, recommended_recipes=recommended_recipes)
+    return render_template('index.html', recipes=retete_potrivite, recommended_recipes=retete_recomandate,
+                           no_recipes_message=mesaj_fara_retete)
 
 
 # Am definit metoda 'recipes' care afiseaza toate retetele
@@ -47,11 +64,11 @@ def index():
 def recipes():
     # Preia parametru din url
     cautare = request.args.get('search', '')
-    # Filtrăm rețetele care conțin cuvantul introdus de utilizator in titlu cu functia ilike
+    # Filtram rețetele care conțin cuvantul introdus de utilizator in titlu cu functia like
     if cautare:
         retete = Retete.query.filter(Retete.titlu.ilike(f'%{cautare}%')).all()
     else:
-        # Daca nu s-a gasit cuvantul respectiv afisam toate retele existente
+        # Daca bara este goala afisam toate retele existente
         retete = Retete.query.all()
 
     # Afisam retele, fie ele filtrate, fie toate retele.

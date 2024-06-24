@@ -69,6 +69,12 @@
             flex-direction: column;
             justify-content: space-between;
         }
+        .no-recipes-message {
+            text-align: center;
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,31 +111,18 @@
                     </div>
                 </div>
             </form>
-            <!-- Rețete recomandate sau potrivite -->
+            <!-- Mesajul când nu sunt suficiente ingrediente -->
+            {% if no_recipes_message %}
+            <div class="no-recipes-message">
+                {{ no_recipes_message }}
+            </div>
+            {% endif %}
+            <!-- Rețete recomandate -->
+            {% if not recipes %}
             <div class="featured-recipes">
-                {% if recipes %}
-                    <h2>Rețete Potrivite</h2>
-                    <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
-                        {% for recipe in recipes %}
-                            <div class="cell">
-                                <div class="card recipe">
-                                    <div class="card-divider">
-                                        <h4 class="recipe-title">{{ recipe.titlu }}</h4>
-                                    </div>
-                                    {% if recipe.imagine %}
-                                    <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
-                                    {% endif %}
-                                    <div class="card-section">
-                                        <p>{{ recipe.instructiuni | truncate(150) }}</p>
-                                        <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <h2>Rețete Recomandate</h2>
-                    <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
+                <h2>Rețete Recomandate</h2>
+                <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
+                    {% if recommended_recipes %}
                         {% for recipe in recommended_recipes %}
                             <div class="cell">
                                 <div class="card recipe">
@@ -146,9 +139,34 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
+            {% endif %}
+            <!-- Rețete găsite -->
+            {% if recipes %}
+            <div class="found-recipes">
+                <h2>Rețete Găsite</h2>
+                <div class="grid-x grid-padding-x small-up-1 medium-up-2 large-up-4">
+                    {% for recipe in recipes %}
+                        <div class="cell">
+                            <div class="card recipe">
+                                <div class="card-divider">
+                                    <h4 class="recipe-title">{{ recipe.titlu }}</h4>
+                                </div>
+                                {% if recipe.imagine %}
+                                <img src="{{ url_for('static', filename=recipe.imagine) }}" alt="Imagine rețetă">
+                                {% endif %}
+                                <div class="card-section">
+                                    <p>{{ recipe.instructiuni | truncate(150) }}</p>
+                                    <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="button expanded">Vezi Reteta</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </main>
 </div>
