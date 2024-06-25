@@ -32,7 +32,7 @@ def index():
         ingrediente_input = request.form.get('ingredients').split(',')
         ingrediente_input = [i.strip().lower() for i in ingrediente_input]
 
-        # Căutăm toate rețetele și ingredientele lor
+        # Preluam toate retetele din baza de date
         toate_retetele = Retete.query.all()
 
         # Verificam fiecare reteta din toate_retetele
